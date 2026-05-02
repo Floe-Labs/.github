@@ -120,12 +120,10 @@ Add to your Claude Desktop or Cursor config:
 ## Links
 
 - **Website:** [floelabs.xyz](https://floelabs.xyz)
-- **App:** [app.floelabs.xyz](https://app.floelabs.xyz)
+- **App:** [app.floelabs.xyz](https://dev-dashboard.floelabs.xyz)
 - **Docs:** [floe-labs.gitbook.io/docs](https://floe-labs.gitbook.io/docs)
-- **𝕏:** [@FloeLabs](https://twitter.com/FloeLabs)
-- **Discord:** [discord.gg/floelabs](https://discord.gg/floelabs)
+- **𝕏:** [@FloeLabs](https://x.com/FloeLabs)
 - **Email:** hello@floelabs.xyz
-- **Security:** security@floelabs.xyz
 
 ---
 
