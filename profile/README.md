@@ -1,5 +1,4 @@
-<!-- Banner: replace with your actual hosted image URL -->
-<!-- <p align="center"><img src="https://floelabs.xyz/github-banner.png" alt="Floe Labs" width="100%" /></p> -->
+<p align="center"><img src="https://raw.githubusercontent.com/Floe-Labs/.github/main/profile/banner.png" alt="Floe Labs" width="100%" /></p>
 
 <h1 align="center">Floe Labs</h1>
 
