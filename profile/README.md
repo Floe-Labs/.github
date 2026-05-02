@@ -14,9 +14,8 @@
 <p align="center">
   <a href="https://floelabs.xyz">Website</a> ·
   <a href="https://floe-labs.gitbook.io/docs">Docs</a> ·
-  <a href="https://app.floelabs.xyz">App</a> ·
-  <a href="https://twitter.com/FloeLabs">𝕏</a> ·
-  <a href="https://discord.gg/floelabs">Discord</a>
+  <a href="https://dev-dashboard.floelabs.xyz">App</a> ·
+  <a href="https://x.com/FloeLabs">𝕏</a> 
 </p>
 
 <p align="center">
