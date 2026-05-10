@@ -3,19 +3,19 @@
 <h1 align="center">Floe Labs</h1>
 
 <p align="center">
-  <strong>Working capital for AI agents.</strong>
+  <strong>The Financial OS for AI Agents.</strong>
 </p>
 
 <p align="center">
-  Deposit USDC, borrow up to 95% — fixed rates, gas-free, no crypto complexity.<br/>
-  3,000+ secured working capital lines issued. Zero defaults.
+  Wallet, fiat on/off-ramp, working capital, x402 payments, and portable credit.<br/>
+  One SDK. Works with any agent framework.
 </p>
 
 <p align="center">
   <a href="https://floelabs.xyz">Website</a> ·
   <a href="https://floe-labs.gitbook.io/docs">Docs</a> ·
   <a href="https://dev-dashboard.floelabs.xyz">Dashboard</a> ·
-  <a href="https://x.com/FloeLabs">&#x1D54F;</a> 
+  <a href="https://x.com/FloeLabs">&#x1D54F;</a>
 </p>
 
 <p align="center">
@@ -27,15 +27,33 @@
 
 ---
 
-## What we're building
+## The Floe Stack
 
-Floe gives AI agents instant access to USDC working capital on Base.
+Everything your agent needs to earn, spend, and build credit. Six components. One SDK.
 
-**The simple story:** deposit USDC as collateral, borrow up to 95% as a credit line. Same-token market — no price-volatility risk, no liquidation surprises. Fixed rates, per-loan isolated escrow. **Gas-free — Floe sponsors all transaction costs.**
+| # | Component | What it does | Status |
+|---|---|---|---|
+| 01 | **Agent Wallet** | Non-custodial smart-contract wallet with ERC-8004 identity, programmable spend limits, and allowed-destination permissions enforced on-chain. | `GA` |
+| 02 | **Fiat on/off-ramp** | USDC in via cards, bank transfers, Apple Pay, Google Pay. Local payouts in 100+ countries on the way out. | Onramp `GA` · Offramp `Preview` |
+| 03 | **Secured working capital** | Instant credit against on-chain collateral. One API call to borrow. **3,000+ lines issued · zero defaults.** | `GA` |
+| 04 | **Unsecured working capital** | Credit underwritten against your agent's receivables and chain-of-thought signals. | `Preview` |
+| 05 | **x402 payment facilitator** | One proxy endpoint to pay any of 13,000+ x402 APIs. Smart-contract enforced limits, ~50ms signing. | `GA` |
+| 06 | **Credit & trust bureau** | Every repayment writes to a portable ERC-8004 record. Other protocols can underwrite your agent without re-running diligence. | Reader `Beta` · Writer `Preview` |
 
-**Fund with fiat:** Agents (or their operators) can fund wallets with USDC via Coinbase — credit card or bank transfer — directly from the [Floe dashboard](https://dev-dashboard.floelabs.xyz). No crypto on-ramp needed.
+---
 
-Also supports WETH and cbBTC collateral for volatile markets and crypto-native agents.
+## Works with your framework
+
+| Framework | Status | How |
+|---|---|---|
+| Coinbase AgentKit | `GA` | Native — `floeActionProvider` |
+| LangChain | `GA` | Via `getLangChainTools` adapter |
+| Vercel AI SDK | `GA` | Via `getVercelAITools` adapter |
+| Claude Desktop / Claude Code / Cursor | `GA` | Via [floe-mcp-server](https://github.com/Floe-Labs/floe-mcp-server) |
+| CrewAI | `Beta` | Via MCP server |
+| OpenAI Agents SDK | `Preview` | MCP fallback today; native adapter on the way |
+| ElizaOS | `Preview` | MCP fallback today |
+| Plain HTTP / REST | `GA` | Any framework that speaks HTTP |
 
 ---
 
@@ -43,10 +61,10 @@ Also supports WETH and cbBTC collateral for volatile markets and crypto-native a
 
 | Repo | What it does | Install |
 |---|---|---|
-| **[agentkit-actions](https://github.com/Floe-Labs/agentkit-actions)** | Coinbase AgentKit ActionProvider — 45 actions for USDC credit lines, lending, flash loans, and x402 credit delegation (TypeScript) | `npm install floe-agent` |
-| **[agentkit-actions-py](https://github.com/Floe-Labs/agentkit-actions-py)** | Same 45 actions for Python (full parity) | `pip install floe-agentkit-actions` |
-| **[floe-mcp-server](https://github.com/Floe-Labs/floe-mcp-server)** | MCP server for Claude Desktop, Cursor, and any MCP-compatible agent | [Setup guide](https://floe-labs.gitbook.io/docs/developers/mcp-server) |
-| **[floe-examples](https://github.com/Floe-Labs/floe-examples)** | Runnable example agents and integration recipes | `git clone` |
+| **[agentkit-actions](https://github.com/Floe-Labs/agentkit-actions)** | The Floe SDK (TypeScript) — 45 actions covering wallet, secured credit, x402, agent awareness, and flash loans. | `npm install floe-agent` |
+| **[agentkit-actions-py](https://github.com/Floe-Labs/agentkit-actions-py)** | The Floe SDK (Python) — same 45 actions, full parity. | `pip install floe-agentkit-actions` |
+| **[floe-mcp-server](https://github.com/Floe-Labs/floe-mcp-server)** | The Floe stack exposed over MCP for Claude, Cursor, and any MCP-compatible agent. | [Setup guide](https://floe-labs.gitbook.io/docs/developers/mcp-server) |
+| **[floe-examples](https://github.com/Floe-Labs/floe-examples)** | Runnable end-to-end agents across frameworks. | `git clone` |
 
 ---
 
@@ -67,12 +85,19 @@ const agent = await AgentKit.from({
   actionProviders: [floeActionProvider()],
 });
 
-// Deposit 10,000 USDC, borrow 9,500 USDC — same-token market, no price risk
+// Borrow against on-chain collateral
 const loan = await agent.run("instant_borrow", {
-  borrowAmount: "9500000000",
-  collateralAmount: "10000000000",
-  maxInterestRateBps: "800",
-  duration: "1209600",
+  borrowAmount: "5000000000",
+  collateralAmount: "5500000000",
+  maxInterestRateBps: "1200",
+  duration: "604800",
+});
+
+// Pay any x402 API through the Floe facilitator
+const response = await agent.run("x402_fetch", {
+  url: "https://api.example.com/premium",
+  method: "POST",
+  body: { prompt: "..." },
 });
 ```
 
@@ -87,18 +112,18 @@ from floe_agentkit_actions import floe_action_provider
 
 provider = floe_action_provider()
 
-# Deposit 10,000 USDC, borrow 9,500 USDC
-result = provider.instant_borrow(wallet_provider, {
-    "borrow_amount": "9500000000",
-    "collateral_amount": "10000000000",
-    "max_interest_rate_bps": "800",
-    "duration": "1209600",
+# Borrow against on-chain collateral
+loan = provider.instant_borrow(wallet_provider, {
+    "borrow_amount": "5000000000",
+    "collateral_amount": "5500000000",
+    "max_interest_rate_bps": "1200",
+    "duration": "604800",
 })
 ```
 
 ### MCP (zero install)
 
-Add to your Claude Desktop or Cursor config:
+Add to your Claude Desktop, Claude Code, or Cursor config:
 
 ```json
 {
@@ -111,7 +136,18 @@ Add to your Claude Desktop or Cursor config:
 }
 ```
 
--> **[Full quickstart](https://floe-labs.gitbook.io/docs/agents/quickstart-agents)**
+-> **[Full quickstart](https://floe-labs.gitbook.io/docs/getting-started/quickstart)**
+
+---
+
+## How it works — the full financial loop
+
+1. **Setup** — register your agent and wallet. ERC-8004 identity, non-custodial wallet, programmable spend limits.
+2. **Fund** — USDC in via cards, bank, Apple Pay, Google Pay, or on-chain.
+3. **Borrow** — one API call to `instant_borrow`. Fixed rate, fixed term, isolated position.
+4. **Spend** — `x402_fetch` against any x402 API. Floe signs, settles, verifies.
+5. **Earn & repay** — agent collects revenue; `repay_loan` returns collateral atomically.
+6. **Build trust** — every repayment writes to your agent's portable on-chain credit record.
 
 ---
 
@@ -120,14 +156,15 @@ Add to your Claude Desktop or Cursor config:
 | | |
 |---|---|
 | **Network** | Base mainnet |
-| **Primary market** | USDC/USDC (deposit USDC, borrow up to 95%) |
+| **Identity** | ERC-8004 agent record |
+| **Primary market** | USDC/USDC, up to 95% LTV |
 | **Volatile markets** | WETH, cbBTC collateral |
 | **Loan tokens** | USDC, USDT |
 | **Matcher proxy** | [`0x17946cD3e180f82e632805e5549EC913330Bb175`](https://basescan.org/address/0x17946cD3e180f82e632805e5549EC913330Bb175) |
-| **Facilitator** | [`0x58EDdE022FFDAD3Fb0Fb0E7D51eb05AaF66a31f1`](https://basescan.org/address/0x58EDdE022FFDAD3Fb0Fb0E7D51eb05AaF66a31f1) |
+| **x402 facilitator** | [`0x58EDdE022FFDAD3Fb0Fb0E7D51eb05AaF66a31f1`](https://basescan.org/address/0x58EDdE022FFDAD3Fb0Fb0E7D51eb05AaF66a31f1) |
 | **Model** | Intent-based P2P matching, fixed rate, fixed term, per-loan isolated escrow |
 | **Gas** | Free — Floe sponsors all transaction costs |
-| **Fund with fiat** | Credit card or bank transfer via Coinbase from the dashboard |
+| **x402 APIs reachable** | 13,000+ via the Floe proxy |
 
 ---
 
@@ -142,5 +179,5 @@ Add to your Claude Desktop or Cursor config:
 ---
 
 <p align="center">
-  <sub>Working capital for the agent economy.</sub>
+  <sub>The Financial OS for AI Agents.</sub>
 </p>
