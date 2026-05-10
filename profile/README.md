@@ -157,7 +157,7 @@ Add to your Claude Desktop, Claude Code, or Cursor config:
 |---|---|
 | **Network** | Base mainnet |
 | **Identity** | ERC-8004 agent record |
-| **Primary market** | USDC/USDC, up to 95% LTV |
+| **Primary market** | USDC/USDC, up to 99.5% LTV |
 | **Volatile markets** | WETH, cbBTC collateral |
 | **Loan tokens** | USDC, USDT |
 | **Matcher proxy** | [`0x17946cD3e180f82e632805e5549EC913330Bb175`](https://basescan.org/address/0x17946cD3e180f82e632805e5549EC913330Bb175) |
