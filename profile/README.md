@@ -3,12 +3,8 @@
 <h1 align="center">Floe Labs</h1>
 
 <p align="center">
-  <strong>The Financial OS for AI Agents.</strong>
-</p>
-
-<p align="center">
-  Wallet, fiat on/off-ramp, working capital, x402 payments, and portable credit.<br/>
-  One SDK. Works with any agent framework.
+  <strong>Credit and payments for AI agent developers.</strong><br/>
+  x402 credit lines, fiat funding, programmable spend controls. No crypto required.
 </p>
 
 <p align="center">
@@ -24,6 +20,14 @@
   <a href="https://github.com/Floe-Labs/agentkit-actions/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-brightgreen" alt="license" /></a>
   <a href="https://basescan.org/address/0x17946cD3e180f82e632805e5549EC913330Bb175"><img src="https://img.shields.io/badge/Base-mainnet-blue" alt="Base mainnet" /></a>
 </p>
+
+---
+
+## How it works
+
+1. **Sign up with email + a funding source.** Card, Apple Pay, Google Pay, or bank transfer. Floe provisions your wallets in the background — no MetaMask, no seed phrase, no gas token.
+2. **Floe issues an x402 credit line to your agent's wallet.** Set spending controls — per-call cap, daily limit, allowed destinations.
+3. **Your agent pays vendors per-call; you get real-time visibility.** Every call is a typed receipt: target URL, amount, status, time. Reconcile, alert, or revoke from the dashboard.
 
 ---
 
