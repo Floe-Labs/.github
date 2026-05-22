@@ -21,6 +21,8 @@
   <a href="https://basescan.org/address/0x17946cD3e180f82e632805e5549EC913330Bb175"><img src="https://img.shields.io/badge/Base-mainnet-blue" alt="Base mainnet" /></a>
 </p>
 
+> **$2 free credit (~200 API calls).** Your agent can start paying for APIs today — no card required. [Get started →](https://dev-dashboard.floelabs.xyz)
+
 ---
 
 ## How it works
