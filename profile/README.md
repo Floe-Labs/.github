@@ -43,8 +43,24 @@ Everything your agent needs to earn, spend, and build credit. Six components. On
 | 02 | **Fiat on/off-ramp** | USDC in via cards, bank transfers, Apple Pay, Google Pay. Local payouts in 100+ countries on the way out. | Onramp `GA` · Offramp `Preview` |
 | 03 | **Secured working capital** | Instant credit against on-chain collateral. One API call to borrow. **3,000+ lines issued · zero defaults.** | `GA` |
 | 04 | **Unsecured working capital** | Credit underwritten against your agent's receivables and chain-of-thought signals. | `Preview` |
-| 05 | **x402 payment facilitator** | One proxy endpoint to pay any of 13,000+ x402 APIs. Smart-contract enforced limits, ~50ms signing. | `GA` |
+| 05 | **x402 payment facilitator** | One proxy endpoint to pay any x402 API. 27 verified endpoints across 7 categories in the [Vendor Marketplace](https://floe-labs.gitbook.io/docs/x402-directory). | `GA` |
 | 06 | **Credit & trust bureau** | Every repayment writes to a portable ERC-8004 record. Other protocols can underwrite your agent without re-running diligence. | Reader `Beta` · Writer `Preview` |
+
+---
+
+## Vendor Marketplace — 27 verified x402 endpoints
+
+Every endpoint below is callable through Floe's proxy with one API key. [Browse the full directory →](https://floe-labs.gitbook.io/docs/x402-directory)
+
+| Category | Services |
+|----------|----------|
+| **Compute** | Venice AI — chat completions, responses API, embeddings |
+| **Voice** | Venice AI — TTS, transcription · dTelecom STT |
+| **Image** | Venice AI — generation, upscale, edit, background removal |
+| **Text** | Firecrawl — search + scrape |
+| **Search** | Exa, Parallel AI, Tavily |
+| **Browser** | Hyperbrowser, Browserbase, Anchor Browser |
+| **Agent Tools** | AgentMail, Pinata Cloud, PostalForm |
 
 ---
 
@@ -170,7 +186,7 @@ Add to your Claude Desktop, Claude Code, or Cursor config:
 | **x402 facilitator** | [`0x58EDdE022FFDAD3Fb0Fb0E7D51eb05AaF66a31f1`](https://basescan.org/address/0x58EDdE022FFDAD3Fb0Fb0E7D51eb05AaF66a31f1) |
 | **Model** | Intent-based P2P matching, fixed rate, fixed term, per-loan isolated escrow |
 | **Gas** | Free — Floe sponsors all transaction costs |
-| **x402 APIs reachable** | 13,000+ via the Floe proxy |
+| **x402 APIs** | 27 verified endpoints in 7 categories; 13,000+ reachable via the proxy |
 
 ---
 
