@@ -18,7 +18,6 @@
   <a href="https://www.npmjs.com/package/floe-agent"><img src="https://img.shields.io/npm/v/floe-agent?label=npm&color=green" alt="npm" /></a>
   <a href="https://pypi.org/project/floe-agentkit-actions/"><img src="https://img.shields.io/pypi/v/floe-agentkit-actions?label=pypi&color=blue" alt="pypi" /></a>
   <a href="https://github.com/Floe-Labs/agentkit-actions/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-brightgreen" alt="license" /></a>
-  <a href="https://basescan.org/address/0x17946cD3e180f82e632805e5549EC913330Bb175"><img src="https://img.shields.io/badge/Base-mainnet-blue" alt="Base mainnet" /></a>
 </p>
 
 > **$2 free credit (~200 API calls).** Your agent can start paying for APIs today — no card required. [Get started →](https://dev-dashboard.floelabs.xyz)
@@ -33,34 +32,32 @@
 
 ---
 
-## The Floe Stack
+## Vendor Marketplace — 27 verified API endpoints
 
-Everything your agent needs to earn, spend, and build credit. Six components. One SDK.
-
-| # | Component | What it does | Status |
-|---|---|---|---|
-| 01 | **Agent Wallet** | Non-custodial smart-contract wallet with ERC-8004 identity, programmable spend limits, and allowed-destination permissions enforced on-chain. | `GA` |
-| 02 | **Fiat on/off-ramp** | USDC in via cards, bank transfers, Apple Pay, Google Pay. Local payouts in 100+ countries on the way out. | Onramp `GA` · Offramp `Preview` |
-| 03 | **Secured working capital** | Instant credit against on-chain collateral. One API call to borrow. **3,000+ lines issued · zero defaults.** | `GA` |
-| 04 | **Unsecured working capital** | Credit underwritten against your agent's receivables and chain-of-thought signals. | `Preview` |
-| 05 | **x402 payment facilitator** | One proxy endpoint to pay any x402 API. 27 verified endpoints across 7 categories in the [Vendor Marketplace](https://floe-labs.gitbook.io/docs/x402-directory). | `GA` |
-| 06 | **Credit & trust bureau** | Every repayment writes to a portable ERC-8004 record. Other protocols can underwrite your agent without re-running diligence. | Reader `Beta` · Writer `Preview` |
-
----
-
-## Vendor Marketplace — 27 verified x402 endpoints
-
-Every endpoint below is callable through Floe's proxy with one API key. [Browse the full directory →](https://floe-labs.gitbook.io/docs/x402-directory)
+Every endpoint is callable with one Floe API key. [Browse the full directory →](https://floe-labs.gitbook.io/docs/x402-directory)
 
 | Category | Services |
 |----------|----------|
-| **Compute** | Venice AI — chat completions, responses API, embeddings |
+| **Compute** | Venice AI — chat, responses API, embeddings |
 | **Voice** | Venice AI — TTS, transcription · dTelecom STT |
 | **Image** | Venice AI — generation, upscale, edit, background removal |
 | **Text** | Firecrawl — search + scrape |
 | **Search** | Exa, Parallel AI, Tavily |
 | **Browser** | Hyperbrowser, Browserbase, Anchor Browser |
 | **Agent Tools** | AgentMail, Pinata Cloud, PostalForm |
+
+---
+
+## The Floe Stack
+
+| # | Component | What it does | Status |
+|---|---|---|---|
+| 01 | **Agent Wallet** | Non-custodial wallet with programmable spend limits and allowed-destination controls. | `GA` |
+| 02 | **Fiat on/off-ramp** | USDC in via cards, bank transfers, Apple Pay, Google Pay. Local payouts in 100+ countries. | Onramp `GA` · Offramp `Preview` |
+| 03 | **Secured working capital** | Instant credit against your deposit. One API call to borrow. **3,000+ lines issued · zero defaults.** | `GA` |
+| 04 | **Unsecured working capital** | Credit underwritten against your agent's receivables and usage signals. | `Preview` |
+| 05 | **x402 payment facilitator** | One proxy endpoint to pay any x402 API. 27 verified endpoints in the [Vendor Marketplace](https://floe-labs.gitbook.io/docs/x402-directory). | `GA` |
+| 06 | **Credit & trust bureau** | Every repayment builds your agent's portable credit record. | Reader `Beta` · Writer `Preview` |
 
 ---
 
@@ -83,9 +80,9 @@ Every endpoint below is callable through Floe's proxy with one API key. [Browse 
 
 | Repo | What it does | Install |
 |---|---|---|
-| **[agentkit-actions](https://github.com/Floe-Labs/agentkit-actions)** | The Floe SDK (TypeScript) — 45 actions covering wallet, secured credit, x402, agent awareness, and flash loans. | `npm install floe-agent` |
-| **[agentkit-actions-py](https://github.com/Floe-Labs/agentkit-actions-py)** | The Floe SDK (Python) — same 45 actions, full parity. | `pip install floe-agentkit-actions` |
-| **[floe-mcp-server](https://github.com/Floe-Labs/floe-mcp-server)** | The Floe stack exposed over MCP for Claude, Cursor, and any MCP-compatible agent. | [Setup guide](https://floe-labs.gitbook.io/docs/developers/mcp-server) |
+| **[agentkit-actions](https://github.com/Floe-Labs/agentkit-actions)** | TypeScript SDK — 45 actions covering wallet, credit, x402, agent awareness, and flash loans. | `npm install floe-agent` |
+| **[agentkit-actions-py](https://github.com/Floe-Labs/agentkit-actions-py)** | Python SDK — same 45 actions, full parity. | `pip install floe-agentkit-actions` |
+| **[floe-mcp-server](https://github.com/Floe-Labs/floe-mcp-server)** | MCP server for Claude, Cursor, and any MCP-compatible agent. | [Setup guide](https://floe-labs.gitbook.io/docs/developers/mcp-server) |
 | **[floe-examples](https://github.com/Floe-Labs/floe-examples)** | Runnable end-to-end agents across frameworks. | `git clone` |
 
 ---
@@ -107,7 +104,7 @@ const agent = await AgentKit.from({
   actionProviders: [floeActionProvider()],
 });
 
-// Borrow against on-chain collateral
+// Borrow against your deposit
 const loan = await agent.run("instant_borrow", {
   borrowAmount: "5000000000",
   collateralAmount: "5500000000",
@@ -115,11 +112,11 @@ const loan = await agent.run("instant_borrow", {
   duration: "604800",
 });
 
-// Pay any x402 API through the Floe facilitator
+// Pay any x402 API through the Floe proxy
 const response = await agent.run("x402_fetch", {
-  url: "https://api.example.com/premium",
+  url: "https://api.exa.ai/search",
   method: "POST",
-  body: { prompt: "..." },
+  body: { query: "AI agent frameworks" },
 });
 ```
 
@@ -134,7 +131,6 @@ from floe_agentkit_actions import floe_action_provider
 
 provider = floe_action_provider()
 
-# Borrow against on-chain collateral
 loan = provider.instant_borrow(wallet_provider, {
     "borrow_amount": "5000000000",
     "collateral_amount": "5500000000",
@@ -158,35 +154,7 @@ Add to your Claude Desktop, Claude Code, or Cursor config:
 }
 ```
 
--> **[Full quickstart](https://floe-labs.gitbook.io/docs/getting-started/quickstart)**
-
----
-
-## How it works — the full financial loop
-
-1. **Setup** — register your agent and wallet. ERC-8004 identity, non-custodial wallet, programmable spend limits.
-2. **Fund** — USDC in via cards, bank, Apple Pay, Google Pay, or on-chain.
-3. **Borrow** — one API call to `instant_borrow`. Fixed rate, fixed term, isolated position.
-4. **Spend** — `x402_fetch` against any x402 API. Floe signs, settles, verifies.
-5. **Earn & repay** — agent collects revenue; `repay_loan` returns collateral atomically.
-6. **Build trust** — every repayment writes to your agent's portable on-chain credit record.
-
----
-
-## Protocol
-
-| | |
-|---|---|
-| **Network** | Base mainnet |
-| **Identity** | ERC-8004 agent record |
-| **Primary market** | USDC/USDC, up to 99.5% LTV |
-| **Volatile markets** | WETH, cbBTC collateral |
-| **Loan tokens** | USDC, USDT |
-| **Matcher proxy** | [`0x17946cD3e180f82e632805e5549EC913330Bb175`](https://basescan.org/address/0x17946cD3e180f82e632805e5549EC913330Bb175) |
-| **x402 facilitator** | [`0x58EDdE022FFDAD3Fb0Fb0E7D51eb05AaF66a31f1`](https://basescan.org/address/0x58EDdE022FFDAD3Fb0Fb0E7D51eb05AaF66a31f1) |
-| **Model** | Intent-based P2P matching, fixed rate, fixed term, per-loan isolated escrow |
-| **Gas** | Free — Floe sponsors all transaction costs |
-| **x402 APIs** | 27 verified endpoints in 7 categories; 13,000+ reachable via the proxy |
+→ **[Full quickstart](https://floe-labs.gitbook.io/docs/getting-started/quickstart)**
 
 ---
 
@@ -201,5 +169,5 @@ Add to your Claude Desktop, Claude Code, or Cursor config:
 ---
 
 <p align="center">
-  <sub>The Financial OS for AI Agents.</sub>
+  <sub>Credit and payments for the agent economy.</sub>
 </p>
