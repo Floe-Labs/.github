@@ -2,7 +2,7 @@
 
 # Floe Labs
 
-**The spend layer for AI agents.** One endpoint to pay across 27 vendor APIs,
+**The spend layer for AI agents.** One endpoint to pay across 2,000+ vendor API services,
 with programmable, context-aware budgets. Walletless. No crypto required.
 
 [Website](https://floelabs.xyz) · [Docs](https://floe-labs.gitbook.io/docs) · [Dashboard](https://dev-dashboard.floelabs.xyz) · [𝕏 @FloeLabs](https://x.com/FloeLabs)
@@ -24,7 +24,7 @@ govern what your agent spends. Agents overspend, loop, and stall.
 
 Floe gives your agent **a budget, not a balance**:
 
-- **One endpoint, 27 APIs.** Pay any x402 vendor through a single proxy. No per-vendor accounts or keys.
+- **One endpoint, 2,000+ vendor API services.** Pay any x402 vendor through a single proxy. No per-vendor accounts or keys.
 - **Programmable spend controls.** Per-call caps, daily limits, allowed destinations — set at the vendor, agent, or team level, time-bound. Enforced *before* money moves.
 - **Context-aware budgets.** Your agent senses when it's near its limit mid-task and adapts (e.g. downgrades to a cheaper model) instead of hard-stopping.
 - **Walletless.** Email + a funding source. We provision wallets in the background — no MetaMask, no seed phrase, no gas. The stablecoin rails are invisible.
@@ -79,7 +79,7 @@ res = provider.x402_fetch(wallet_provider, {
 
 → [Full quickstart](https://floe-labs.gitbook.io/docs/developers/agent-quickstart)
 
-## Vendor Marketplace — 27 endpoints, one key
+## Vendor Marketplace — 2,000+ vendor API services, one key
 
 | Category | Services |
 |---|---|
