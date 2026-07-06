@@ -113,7 +113,7 @@ res = provider.x402_fetch(wallet_provider, {
 | [agentkit-actions](https://github.com/Floe-Labs/agentkit-actions) | TypeScript SDK — wallet, x402 payments, spend controls, agent awareness | `npm install floe-agent` |
 | [agentkit-actions-py](https://github.com/Floe-Labs/agentkit-actions-py) | Python SDK — full parity | `pip install floe-agentkit-actions` |
 | [floe-mcp-server](https://github.com/Floe-Labs/floe-mcp-server) | MCP server for Claude, Cursor, any MCP agent | [Setup](https://github.com/Floe-Labs/floe-mcp-server#readme) |
-| [floe-examples](https://github.com/Floe-Labs/floe-examples) | Runnable end-to-end agents | `git clone` |
+| [floe-cookbook](https://github.com/Floe-Labs/floe-cookbook) | Runnable end-to-end agents | `git clone` |
 
 ## Roadmap
 

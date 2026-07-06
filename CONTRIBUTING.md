@@ -15,7 +15,7 @@ Most contributions happen in our public repos:
 - [agentkit-actions](https://github.com/Floe-Labs/agentkit-actions) — TypeScript AgentKit provider (`floe-agent` on npm).
 - [agentkit-actions-py](https://github.com/Floe-Labs/agentkit-actions-py) — Python AgentKit provider (`floe-agentkit-actions` on PyPI).
 - [floe-mcp-server](https://github.com/Floe-Labs/floe-mcp-server) — MCP server for Claude Desktop, Cursor, and other MCP clients.
-- [floe-examples](https://github.com/Floe-Labs/floe-examples) — example agents and integrations.
+- [floe-cookbook](https://github.com/Floe-Labs/floe-cookbook) — example agents and integrations.
 - [floe-guard](https://github.com/Floe-Labs/floe-guard) — local budget guardrail for AI agents.
 
 ## Contribution flow
