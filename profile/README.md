@@ -2,8 +2,8 @@
 
 # Floe Labs
 
-**The spend layer for AI agents.** One endpoint to pay across 2,000+ vendor API services,
-with programmable, context-aware budgets. Walletless. No crypto required.
+**The spend layer for AI agents.** One endpoint to pay across any LLM or voice vendor API services,
+with programmable, context-aware budgets. Walletless.
 
 [Website](https://floelabs.xyz) · [Docs](https://floe-labs.gitbook.io/docs) · [Dashboard](https://dev-dashboard.floelabs.xyz) · [𝕏 @FloeLabs](https://x.com/FloeLabs)
 
@@ -13,7 +13,7 @@ with programmable, context-aware budgets. Walletless. No crypto required.
 
 ---
 
-> **Start free.** $2 in API credit on signup — no card, no wallet, no crypto.
+> **Start free.** 200 API credits on signup — no card, no wallet.
 > Your agent makes its first paid API call in minutes. [Get started →](https://dev-dashboard.floelabs.xyz)
 
 ## Why Floe
@@ -24,7 +24,7 @@ govern what your agent spends. Agents overspend, loop, and stall.
 
 Floe gives your agent **a budget, not a balance**:
 
-- **One endpoint, 2,000+ vendor API services.** Pay any x402 vendor through a single proxy. No per-vendor accounts or keys.
+- **One endpoint, 2,000+ LLM inference + vendor API services.** Pay any vendor through Floe. No per-vendor accounts or keys.
 - **Programmable spend controls.** Per-call caps, daily limits, allowed destinations — set at the vendor, agent, or team level, time-bound. Enforced *before* money moves.
 - **Context-aware budgets.** Your agent senses when it's near its limit mid-task and adapts (e.g. downgrades to a cheaper model) instead of hard-stopping.
 - **Walletless.** Email + a funding source. We provision wallets in the background — no MetaMask, no seed phrase, no gas. The stablecoin rails are invisible.
@@ -83,7 +83,7 @@ res = provider.x402_fetch(wallet_provider, {
 
 | Category | Services |
 |---|---|
-| Compute | Venice AI (chat, responses, embeddings) |
+| Compute | Venice AI (chat, responses, embeddings) | OpenAI | z.ai | Kimi | Anthropic | Google Gemini
 | Voice | Venice AI (TTS, transcription) · dTelecom STT |
 | Image | Venice AI (generation, upscale, edit, background removal) |
 | Web | Firecrawl (search + scrape) |
