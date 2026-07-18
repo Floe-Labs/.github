@@ -2,8 +2,7 @@
 
 # Floe Labs
 
-**The spend layer for AI agents.** One endpoint to pay across any LLM or voice vendor API services,
-with programmable, context-aware budgets. Walletless.
+**One key for your voice agent's entire bill — LLM, voice, telephony, data.** One endpoint to pay across any LLM or voice vendor API services, with programmable, context-aware budgets. Walletless.
 
 [Website](https://floelabs.xyz) · [Docs](https://floe-labs.gitbook.io/docs) · [Dashboard](https://dev-dashboard.floelabs.xyz) · [𝕏 @FloeLabs](https://x.com/FloeLabs)
 
@@ -18,6 +17,8 @@ with programmable, context-aware budgets. Walletless.
 
 ## Why Floe
 
+**A token router meters your LLM spend — ~40% of a voice call. Floe meters 100%:** transcription, speech, telephony, search, and reasoning, on one key.
+
 Your agent calls a dozen paid APIs — LLMs, voice, search, data. That's a dozen
 accounts, a dozen prepaid balances, a dozen keys, and no unified way to see or
 govern what your agent spends. Agents overspend, loop, and stall.
@@ -26,47 +27,36 @@ Floe gives your agent **a budget, not a balance**:
 
 - **One endpoint, 2,000+ LLM inference + vendor API services.** Pay any vendor through Floe. No per-vendor accounts or keys.
 - **Programmable spend controls.** Per-call caps, daily limits, allowed destinations — set at the vendor, agent, or team level, time-bound. Enforced *before* money moves.
-- **Context-aware budgets.** Your agent senses when it's near its limit mid-task and adapts (e.g. downgrades to a cheaper model) instead of hard-stopping.
+- **Budget-aware routing.** Every response carries `result.budgetAdvisory` — how close the agent is to its tightest cap. Your agent reads it and downgrades, finishes the task, or hard-stops *before* it overspends, instead of failing at the cap.
 - **Walletless.** Email + a funding source. We provision wallets in the background — no MetaMask, no seed phrase, no gas. The stablecoin rails are invisible.
 - **Real-time visibility.** Every call is a typed receipt: target, amount, status, time. Reconcile, alert, or revoke from the dashboard.
 
-## Quickstart (5 minutes)
+## Quickstart — one voice turn, one key
+
+A single spoken turn spends across speech-to-text, an LLM, and text-to-speech. Same key, same task budget for all three — a token router only ever sees the middle step.
 
 ```bash
-npm install floe-agent @coinbase/agentkit viem zod
+# 1 · Transcribe (Deepgram) — through the Floe proxy
+curl -X POST https://credit-api.floelabs.xyz/v1/proxy/fetch \
+  -H "Authorization: Bearer $FLOE_API_KEY" \
+  -H "X-Floe-Task-Id: call-8842" \
+  -d '{"url":"<DEEPGRAM_STT_ENDPOINT>","method":"POST","body":"{...audio...}"}'
+
+# 2 · Reason (any LLM) — lands on the same ledger as the vendor legs
+curl -X POST https://credit-api.floelabs.xyz/v1/llm/chat/completions \
+  -H "Authorization: Bearer $FLOE_API_KEY" \
+  -H "X-Floe-Provider-Key: $OPENAI_API_KEY" \
+  -H "X-Floe-Task-Id: call-8842" \
+  -d '{"model":"gpt-4o","messages":[{"role":"user","content":"Book Friday at 2pm."}]}'
+
+# 3 · Speak (ElevenLabs) — through the Floe proxy
+curl -X POST https://credit-api.floelabs.xyz/v1/proxy/fetch \
+  -H "Authorization: Bearer $FLOE_API_KEY" \
+  -H "X-Floe-Task-Id: call-8842" \
+  -d '{"url":"<ELEVENLABS_TTS_ENDPOINT>","method":"POST","body":"{...text...}"}'
 ```
 
-```typescript
-import { AgentKit } from "@coinbase/agentkit";
-import { floeActionProvider } from "floe-agent";
-
-const agent = await AgentKit.from({
-  walletProvider,
-  actionProviders: [floeActionProvider()],
-});
-
-// Pay any x402 API through the Floe proxy — your agent never touches the payment layer
-const res = await agent.run("x402_fetch", {
-  url: "https://api.exa.ai/search",
-  method: "POST",
-  body: { query: "AI agent frameworks" },
-});
-```
-
-```bash
-pip install floe-agentkit-actions
-```
-
-```python
-from floe_agentkit_actions import floe_action_provider
-
-provider = floe_action_provider()
-res = provider.x402_fetch(wallet_provider, {
-    "url": "https://api.exa.ai/search",
-    "method": "POST",
-    "body": {"query": "AI agent frameworks"},
-})
-```
+All three legs share `X-Floe-Task-Id`, so one task budget caps the whole conversation — STT, LLM, and TTS together, on one ledger.
 
 **MCP (zero install)** — add to Claude Desktop / Claude Code / Cursor:
 
@@ -77,14 +67,16 @@ res = provider.x402_fetch(wallet_provider, {
 } } }
 ```
 
-→ [Full quickstart](https://floe-labs.gitbook.io/docs/developers/agent-quickstart)
+Prefer an SDK? `npm install floe-agent` or `pip install floe-agentkit-actions` — see [Repos](#repos).
+
+→ [Voice Stack quickstart →](https://floe-labs.gitbook.io/docs/build/voice-stack)
 
 ## Vendor Marketplace — 2,000+ vendor API services, one key
 
 | Category | Services |
 |---|---|
-| Compute | Venice AI (chat, responses, embeddings) | OpenAI | z.ai | Kimi | Anthropic | Google Gemini
-| Voice | Venice AI (TTS, transcription) · dTelecom STT |
+| Compute | Venice AI · OpenAI · Anthropic · Google Gemini · z.ai · Kimi |
+| Voice | Deepgram · ElevenLabs · Venice AI · Twilio (soon) |
 | Image | Venice AI (generation, upscale, edit, background removal) |
 | Web | Firecrawl (search + scrape) |
 | Search | Exa · Parallel AI · Tavily |
@@ -103,7 +95,6 @@ res = provider.x402_fetch(wallet_provider, {
 | Claude / Cursor | GA | `floe-mcp-server` |
 | CrewAI | Beta | via MCP server |
 | OpenAI Agents SDK | Preview | MCP fallback; native adapter in progress |
-| ElizaOS | Preview | MCP fallback |
 | Plain HTTP/REST | GA | anything that speaks HTTP |
 
 ## Repos
@@ -113,7 +104,9 @@ res = provider.x402_fetch(wallet_provider, {
 | [agentkit-actions](https://github.com/Floe-Labs/agentkit-actions) | TypeScript SDK — wallet, x402 payments, spend controls, agent awareness | `npm install floe-agent` |
 | [agentkit-actions-py](https://github.com/Floe-Labs/agentkit-actions-py) | Python SDK — full parity | `pip install floe-agentkit-actions` |
 | [floe-mcp-server](https://github.com/Floe-Labs/floe-mcp-server) | MCP server for Claude, Cursor, any MCP agent | [Setup](https://github.com/Floe-Labs/floe-mcp-server#readme) |
-| [floe-cookbook](https://github.com/Floe-Labs/floe-cookbook) | Runnable end-to-end agents | `git clone` |
+| [floe-cookbook](https://github.com/Floe-Labs/floe-cookbook) | Runnable end-to-end agents, including voice | `git clone` |
+| [eve-floe](https://github.com/Floe-Labs/eve-floe) | Reference voice agent built on Floe | `git clone` |
+| [floe-guard](https://github.com/Floe-Labs/floe-guard) | Local budget guardrail — hard-stops a runaway agent before it overspends | `pip install floe-guard` |
 
 ## Roadmap
 
