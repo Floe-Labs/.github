@@ -42,12 +42,11 @@ curl -X POST https://credit-api.floelabs.xyz/v1/proxy/fetch \
   -H "X-Floe-Task-Id: call-8842" \
   -d '{"url":"<DEEPGRAM_STT_ENDPOINT>","method":"POST","body":"{...audio...}"}'
 
-# 2 · Reason (any LLM) — lands on the same ledger as the vendor legs
-curl -X POST https://credit-api.floelabs.xyz/v1/llm/chat/completions \
+# 2 · Reason (any LLM) — keyless: only your Floe key, same ledger
+curl -X POST https://credit-api.floelabs.xyz/v1/chat/completions \
   -H "Authorization: Bearer $FLOE_API_KEY" \
-  -H "X-Floe-Provider-Key: $OPENAI_API_KEY" \
   -H "X-Floe-Task-Id: call-8842" \
-  -d '{"model":"gpt-4o","messages":[{"role":"user","content":"Book Friday at 2pm."}]}'
+  -d '{"model":"openai/gpt-4o","messages":[{"role":"user","content":"Book Friday at 2pm."}]}'
 
 # 3 · Speak (ElevenLabs) — through the Floe proxy
 curl -X POST https://credit-api.floelabs.xyz/v1/proxy/fetch \
