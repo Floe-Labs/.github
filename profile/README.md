@@ -39,18 +39,21 @@ A single spoken turn spends across speech-to-text, an LLM, and text-to-speech. S
 # 1 · Transcribe (Deepgram) — through the Floe proxy
 curl -X POST https://credit-api.floelabs.xyz/v1/proxy/fetch \
   -H "Authorization: Bearer $FLOE_API_KEY" \
+  -H "Content-Type: application/json" \
   -H "X-Floe-Task-Id: call-8842" \
   -d '{"url":"<DEEPGRAM_STT_ENDPOINT>","method":"POST","body":"{...audio...}"}'
 
 # 2 · Reason (any LLM) — keyless: only your Floe key, same ledger
 curl -X POST https://credit-api.floelabs.xyz/v1/chat/completions \
   -H "Authorization: Bearer $FLOE_API_KEY" \
+  -H "Content-Type: application/json" \
   -H "X-Floe-Task-Id: call-8842" \
   -d '{"model":"openai/gpt-4o","messages":[{"role":"user","content":"Book Friday at 2pm."}]}'
 
 # 3 · Speak (ElevenLabs) — through the Floe proxy
 curl -X POST https://credit-api.floelabs.xyz/v1/proxy/fetch \
   -H "Authorization: Bearer $FLOE_API_KEY" \
+  -H "Content-Type: application/json" \
   -H "X-Floe-Task-Id: call-8842" \
   -d '{"url":"<ELEVENLABS_TTS_ENDPOINT>","method":"POST","body":"{...text...}"}'
 ```
