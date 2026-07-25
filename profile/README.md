@@ -58,7 +58,7 @@ curl -X POST https://credit-api.floelabs.xyz/v1/proxy/fetch \
   -d '{"url":"<ELEVENLABS_TTS_ENDPOINT>","method":"POST","body":"{...text...}"}'
 ```
 
-All three legs share `X-Floe-Task-Id`, so one task budget caps the whole conversation — STT, LLM, and TTS together, on one ledger.
+All three legs share `X-Floe-Task-Id`, so one task budget caps the whole conversation — STT, LLM, and TTS together, on one ledger. Each response returns its own cost in `X-Floe-Payment-Amount` (e.g. `0.0125`), so you can meter spend per call and per task.
 
 **MCP (zero install)** — add to Claude Desktop / Claude Code / Cursor:
 
@@ -72,6 +72,22 @@ All three legs share `X-Floe-Task-Id`, so one task budget caps the whole convers
 Prefer an SDK? `npm install floe-agent` or `pip install floe-agentkit-actions` — see [Repos](#repos).
 
 → [Voice Stack quickstart →](https://floe-labs.gitbook.io/docs/build/voice-stack)
+
+## Already have a pipeline?
+
+Don't rebuild anything. Route just the LLM leg — change the base URL and the key:
+
+```python
+from openai import OpenAI
+
+client = OpenAI(
+    base_url="https://credit-api.floelabs.xyz/v1",  # was https://api.openai.com/v1
+    api_key=os.environ["FLOE_API_KEY"],             # your Floe key — not an OpenAI key
+)
+# every call now bills to your Floe balance, under your spend caps
+```
+
+OpenAI-compatible, so it works from any SDK. Route one leg or your whole voice bill → [Add Floe to your existing pipeline](https://floe-labs.gitbook.io/docs/getting-started/integrate-existing-pipeline).
 
 ## Vendor Marketplace — 2,000+ vendor API services, one key
 
