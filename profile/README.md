@@ -12,7 +12,7 @@
 
 ---
 
-> **Start free.** 200 API credits on signup — no card, no wallet.
+> **Start free.** A $3 Welcome Credit — 300 API credits — on signup, no card, no wallet.
 > Your agent makes its first paid API call in minutes. [Get started →](https://dev-dashboard.floelabs.xyz)
 
 ## Why Floe
