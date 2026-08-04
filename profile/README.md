@@ -23,7 +23,7 @@ Let your coding agent set Floe up, or wire it yourself:
 |---|---|
 | **Agent** — Claude Code / Cursor does the setup | paste: `Read https://dev-dashboard.floelabs.xyz/agents.md and set up Floe for this project.` |
 | **Skill** — install the Floe agent skill | `npx skills add floe-labs/agent-skills` |
-| **MCP** — hosted MCP server (65 tools) | `npx -y add-mcp https://mcp.floelabs.xyz/mcp` |
+| **MCP** — hosted MCP server (65 tools) | `claude mcp add --transport http floe https://mcp.floelabs.xyz/mcp` |
 | **NPM** — the CLI + SDK | `npm i -g floe-agent` |
 
 [Set up with your AI tools →](https://floe-labs.gitbook.io/docs/getting-started/setup-with-ai-tools) · [Agent skill →](https://github.com/Floe-Labs/agent-skills)
@@ -73,13 +73,11 @@ curl -X POST https://credit-api.floelabs.xyz/v1/proxy/fetch \
 
 All three legs share `X-Floe-Task-Id`, so one task budget caps the whole conversation — STT, LLM, and TTS together, on one ledger. Each response returns its own cost in `X-Floe-Payment-Amount` (e.g. `0.0125`), so you can meter spend per call and per task.
 
-**MCP (zero install)** — add to Claude Desktop / Claude Code / Cursor:
+**MCP (zero install)** — add to Claude Code / Cursor / Claude Desktop:
 
-```json
-{ "mcpServers": { "floe": {
-  "url": "https://mcp.floelabs.xyz/mcp",
-  "transport": "streamable-http"
-} } }
+```bash
+claude mcp add --transport http floe https://mcp.floelabs.xyz/mcp \
+  --header "Authorization: Bearer YOUR_FLOE_KEY"
 ```
 
 Prefer an SDK? `npm install floe-agent` or `pip install floe-agentkit-actions` — see [Repos](#repos).
@@ -107,7 +105,7 @@ OpenAI-compatible, so it works from any SDK. Route one leg or your whole voice b
 | Category | Services |
 |---|---|
 | Compute | Venice AI · OpenAI · Anthropic · Google Gemini · z.ai · Kimi |
-| Voice | Deepgram · ElevenLabs · Venice AI · Twilio (soon) |
+| Voice | Deepgram · ElevenLabs · Venice AI · Floe Phone via Twilio (live) |
 | Image | Venice AI (generation, upscale, edit, background removal) |
 | Web | Firecrawl (search + scrape) |
 | Search | Exa · Parallel AI · Tavily |
