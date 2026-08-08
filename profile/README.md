@@ -2,7 +2,7 @@
 
 # Floe Labs
 
-**One key for your voice agent's entire bill — LLM, voice, telephony, data.** One endpoint to pay across any LLM or voice vendor API services, with programmable, context-aware budgets. Walletless.
+**Spend controls for Voice AI.** Your agent's whole bill — telephony, STT, LLM, TTS, search — on one ledger, enforced before money moves. Inside Vapi, Retell & Bland, or fully BYOK.
 
 [Website](https://floelabs.xyz) · [Docs](https://floe-labs.gitbook.io/docs) · [Dashboard](https://dev-dashboard.floelabs.xyz) · [𝕏 @FloeLabs](https://x.com/FloeLabs)
 
@@ -12,39 +12,16 @@
 
 ---
 
-> **Start free.** $3 Welcome Credit — 300 API credits on signup, no card, no wallet.
-> Your agent makes its first paid API call in minutes. [Get started →](https://dev-dashboard.floelabs.xyz)
+> **Start free.** $3 Welcome Credit — 300 API credits on signup, no card required.
+> Your agent makes its first paid call in minutes. [Get started →](https://dev-dashboard.floelabs.xyz)
 
-## Start building — pick your path
+## The problem
 
-Let your coding agent set Floe up, or wire it yourself:
+A voice call touches 7–20 vendors, each billing separately. Token and TTS usage varies every conversation, so true per-call cost only exists by joining usage data across providers after the call. A token router meters ~40% of the bill — the LLM slice — and is blind to the other 60%. On BYOK, platform dashboards report provider costs as $0.
 
-| Path | One line |
-|---|---|
-| **Agent** — Claude Code / Cursor does the setup | paste: `Read https://dev-dashboard.floelabs.xyz/agents.md and set up Floe for this project.` |
-| **Skill** — install the Floe agent skill | `npx skills add floe-labs/agent-skills` |
-| **MCP** — hosted MCP server (65 tools) | `claude mcp add --transport http floe https://mcp.floelabs.xyz/mcp` |
-| **NPM** — the CLI + SDK | `npm i -g floe-agent` |
+Floe is that join, plus enforcement: per-call cost across every vendor, and caps applied **before** money moves where Floe is in the path — with a between-call circuit breaker everywhere else. Gateway overhead: **38ms p50 / ~180ms p99** on live keyless production traffic.
 
-[Set up with your AI tools →](https://floe-labs.gitbook.io/docs/getting-started/setup-with-ai-tools) · [Agent skill →](https://github.com/Floe-Labs/agent-skills)
-
-## Why Floe
-
-**A token router meters your LLM spend — ~40% of a voice call. Floe meters 100%:** transcription, speech, telephony, search, and reasoning, on one key.
-
-Your agent calls a dozen paid APIs — LLMs, voice, search, data. That's a dozen
-accounts, a dozen prepaid balances, a dozen keys, and no unified way to see or
-govern what your agent spends. Agents overspend, loop, and stall.
-
-Floe gives your agent **a budget, not a balance**:
-
-- **One endpoint, 2,000+ LLM inference + vendor API services.** Pay any vendor through Floe. No per-vendor accounts or keys.
-- **Programmable spend controls.** Per-call caps, daily limits, allowed destinations — set at the vendor, agent, or team level, time-bound. Enforced *before* money moves.
-- **Budget-aware routing.** Every response carries `result.budgetAdvisory` — how close the agent is to its tightest cap. Your agent reads it and downgrades, finishes the task, or hard-stops *before* it overspends, instead of failing at the cap.
-- **Walletless.** Email + a funding source. We provision wallets in the background — no MetaMask, no seed phrase, no gas. The stablecoin rails are invisible.
-- **Real-time visibility.** Every call is a typed receipt: target, amount, status, time. Reconcile, alert, or revoke from the dashboard.
-
-## Quickstart — one voice turn, one key
+## Quickstart — one voice turn, one budget
 
 A single spoken turn spends across speech-to-text, an LLM, and text-to-speech. Same key, same task budget for all three — a token router only ever sees the middle step.
 
@@ -71,7 +48,7 @@ curl -X POST https://credit-api.floelabs.xyz/v1/proxy/fetch \
   -d '{"url":"<ELEVENLABS_TTS_ENDPOINT>","method":"POST","body":"{...text...}"}'
 ```
 
-All three legs share `X-Floe-Task-Id`, so one task budget caps the whole conversation — STT, LLM, and TTS together, on one ledger. Each response returns its own cost in `X-Floe-Payment-Amount` (e.g. `0.0125`), so you can meter spend per call and per task.
+All three legs share `X-Floe-Task-Id`, so one budget caps the whole conversation — STT, LLM, and TTS together, on one ledger. Each response returns its cost in `X-Floe-Payment-Amount` (e.g. `0.0125`).
 
 **MCP (zero install)** — add to Claude Code / Cursor / Claude Desktop:
 
@@ -82,11 +59,18 @@ claude mcp add --transport http floe https://mcp.floelabs.xyz/mcp \
 
 Prefer an SDK? `npm install floe-agent` or `pip install floe-agentkit-actions` — see [Repos](#repos).
 
-→ [Voice Stack quickstart →](https://floe-labs.gitbook.io/docs/build/voice-stack)
+## Three ways in
 
-## Already have a pipeline?
+**1 · Inside your platform (Vapi / Retell / Bland).** Documented hooks, zero platform cooperation:
 
-Don't rebuild anything. Route just the LLM leg — change the base URL and the key:
+- **Custom-LLM slot → Floe** — pre-call enforcement on ~60% of call cost. Recipes: [vapi-custom-llm](https://github.com/Floe-Labs/floe-cookbook/tree/main/vapi-custom-llm), [retell-custom-llm](https://github.com/Floe-Labs/floe-cookbook/tree/main/retell-custom-llm). *(Bland has no self-serve custom LLM — govern it with Reconcile Mode below.)*
+- **Custom voice & transcriber → Floe** *(early access)* — metered STT/TTS in your provider dropdown. Behind a flag until we publish a media-path latency benchmark — we don't promote a leg in your audio path ahead of its numbers. Recipe: [vapi-voice-metered](https://github.com/Floe-Labs/floe-cookbook/tree/main/vapi-voice-metered).
+- **End-of-call webhooks → Reconcile Mode** — every call reconciled onto one ledger at call-end; cross your cap and the next call is denied. A runaway campaign dies at call N, not call 10,000.
+- **Coverage Score**, per agent, in the dashboard — % of spend enforceable pre-call vs reconciled vs dark, and which leg to move to raise it.
+
+Pre-call where we're in the path. Circuit breaker everywhere else. [Setup →](https://floe-labs.gitbook.io/docs/the-voice-stack/voice-orchestrators) · [Graduate to 100% coverage →](https://floe-labs.gitbook.io/docs/the-voice-stack/migrate-to-full-coverage)
+
+**2 · BYOK.** Keep your vendor accounts and keys — Floe meters, joins, and caps on top. Route just the LLM leg by changing the base URL and key:
 
 ```python
 from openai import OpenAI
@@ -98,7 +82,9 @@ client = OpenAI(
 # every call now bills to your Floe balance, under your spend caps
 ```
 
-OpenAI-compatible, so it works from any SDK. Route one leg or your whole voice bill → [Add Floe to your existing pipeline](https://floe-labs.gitbook.io/docs/getting-started/integrate-existing-pipeline).
+OpenAI-compatible, so it works from any SDK. → [Add Floe to your existing pipeline](https://floe-labs.gitbook.io/docs/getting-started/integrate-existing-pipeline)
+
+**3 · Keyless.** One Floe key, no per-vendor accounts, welcome credits. Fund by card; settlement is automatic. Best for prototypes and net-new agents.
 
 ## Vendor Marketplace — 2,000+ vendor API services, one key
 
@@ -130,21 +116,14 @@ OpenAI-compatible, so it works from any SDK. Route one leg or your whole voice b
 
 | Repo | What it does | Install |
 |---|---|---|
-| [agentkit-actions](https://github.com/Floe-Labs/agentkit-actions) | TypeScript SDK — wallet, x402 payments, spend controls, agent awareness | `npm install floe-agent` |
+| [agentkit-actions](https://github.com/Floe-Labs/agentkit-actions) | TypeScript SDK — spend controls, metered vendor calls, agent awareness | `npm install floe-agent` |
 | [agentkit-actions-py](https://github.com/Floe-Labs/agentkit-actions-py) | Python SDK — full parity | `pip install floe-agentkit-actions` |
-| [floe-mcp-server](https://github.com/Floe-Labs/floe-mcp-server) | MCP server for Claude, Cursor, any MCP agent | [Setup](https://github.com/Floe-Labs/floe-mcp-server#readme) |
-| [floe-cookbook](https://github.com/Floe-Labs/floe-cookbook) | Runnable end-to-end agents, including voice | `git clone` |
-| [eve-floe](https://github.com/Floe-Labs/eve-floe) | Reference voice agent built on Floe | `git clone` |
 | [floe-guard](https://github.com/Floe-Labs/floe-guard) | Local budget guardrail — hard-stops a runaway agent before it overspends | `pip install floe-guard` |
+| [floe-cookbook](https://github.com/Floe-Labs/floe-cookbook) | Runnable end-to-end agents, including voice | `git clone` |
+| [floe-mcp-server](https://github.com/Floe-Labs/floe-mcp-server) | MCP server for Claude, Cursor, any MCP agent | [Setup](https://github.com/Floe-Labs/floe-mcp-server#readme) |
+| [eve-floe](https://github.com/Floe-Labs/eve-floe) | Reference voice agent built on Floe | `git clone` |
 
-## Roadmap
-
-Floe is shipping the spend layer first, and building the credit layer on top of it.
-
-- **Working capital / credit lines** — *in development.* Borrow against deposits and, later, against your agent's usage and receivables.
-- **Portable credit & trust record** — *in development.* Every transaction builds the behavioral data that will let agents be underwritten without re-running diligence.
-
-Want early access to credit features? [Talk to us →](mailto:hello@floelabs.xyz)
+**Voice recipes** (in [floe-cookbook](https://github.com/Floe-Labs/floe-cookbook)): [vapi-custom-llm](https://github.com/Floe-Labs/floe-cookbook/tree/main/vapi-custom-llm) · [retell-custom-llm](https://github.com/Floe-Labs/floe-cookbook/tree/main/retell-custom-llm) · [vapi-voice-metered](https://github.com/Floe-Labs/floe-cookbook/tree/main/vapi-voice-metered)
 
 ---
 
