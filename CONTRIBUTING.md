@@ -1,6 +1,6 @@
 # Contributing to Floe Labs
 
-Floe is the spend layer for AI agents. We build the wallet, payments, and credit
+Floe is spend controls for Voice AI. We build the wallet, payments, and credit
 that let agents transact on their own.
 
 This is the organization-wide contribution guide for
