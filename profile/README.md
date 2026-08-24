@@ -21,6 +21,18 @@ Every voice call your agent makes spends money across a dozen vendors — the ph
 
 Floe costs every call the moment it ends, tags the spend to the client and campaign, and shows you your margin per contract — so you can price the next deal on actuals instead of a blended guess, and walk into your next raise with your unit economics under control. (A token router meters only the LLM slice — ~40% of the bill — and is blind to the other 60%; on BYOK, platform dashboards report provider costs as $0. Floe is the join across every vendor, plus enforcement where it's in the path. Gateway overhead: **38ms p50 / ~180ms p99** on live keyless production traffic.)
 
+## From cost to margin, in four moves
+
+**1 · Cost.** Floe costs every leg of the call — telephony, STT, LLM, TTS, tools — the moment it ends, joined across every vendor into one ledger. No estimates, no month-end spreadsheet. Tagged by agent, client, and campaign.
+
+**2 · Margin.** Apply a rate card and markup per client; Floe joins what the call *cost* to what you *charge* — margin per client, per campaign, per contract. It's the P&L view finance has been building by hand — including the client you're quietly losing money on, before the quarter closes.
+
+**3 · Invoice.** Bill your own customers off the actuals — white-label statements and invoices sent through **your** Stripe, your brand, your logo. Floe never touches the money.
+
+**4 · Price the next deal.** You sell outcomes; you pay for minutes. Floe joins the two — so you walk into the next contract, and the next raise, with cost per outcome and margin per contract, not a blended guess.
+
+**Who owns the margin:** voice-AI companies (Series A–C), agencies billing many clients on one ledger — *your ledger, your margin, your logo* — and developers who start with the OSS guardrail. **Start free; pay when it pays you.**
+
 ## Quickstart — one voice turn, one budget
 
 A single spoken turn spends across speech-to-text, an LLM, and text-to-speech. Same key, same task budget for all three — a token router only ever sees the middle step.
