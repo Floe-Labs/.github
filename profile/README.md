@@ -2,7 +2,7 @@
 
 # Floe Labs
 
-**Spend controls for Voice AI.** Your agent's whole bill — telephony, STT, LLM, TTS, search — on one ledger, enforced before money moves. Inside Vapi, Retell & Bland, or fully BYOK.
+**What every voice call actually costs — across every carrier, speech, and model vendor.** So finance can price contracts on real numbers, protect gross margin, and stop guessing at the gap between what they signed and what they deployed. Inside Vapi, Retell & Bland, or fully BYOK.
 
 [Website](https://floelabs.xyz) · [Docs](https://floe-labs.gitbook.io/docs) · [Dashboard](https://dev-dashboard.floelabs.xyz) · [𝕏 @FloeLabs](https://x.com/FloeLabs)
 
@@ -17,9 +17,9 @@
 
 ## The problem
 
-A voice call touches 7–20 vendors, each billing separately. Token and TTS usage varies every conversation, so true per-call cost only exists by joining usage data across providers after the call. A token router meters ~40% of the bill — the LLM slice — and is blind to the other 60%. On BYOK, platform dashboards report provider costs as $0.
+Every voice call your agent makes spends money across a dozen vendors — the phone carrier, the speech-to-text, the language model, the voice, the tools. Those bills arrive separately, in different units, on different days, and your finance team spends weeks stitching them together to answer one question: **what did this client, this campaign, this call actually cost us?**
 
-Floe is that join, plus enforcement: per-call cost across every vendor, and caps applied **before** money moves where Floe is in the path — with a between-call circuit breaker everywhere else. Gateway overhead: **38ms p50 / ~180ms p99** on live keyless production traffic.
+Floe costs every call the moment it ends, tags the spend to the client and campaign, and shows you your margin per contract — so you can price the next deal on actuals instead of a blended guess, and walk into your next raise with your unit economics under control. (A token router meters only the LLM slice — ~40% of the bill — and is blind to the other 60%; on BYOK, platform dashboards report provider costs as $0. Floe is the join across every vendor, plus enforcement where it's in the path. Gateway overhead: **38ms p50 / ~180ms p99** on live keyless production traffic.)
 
 ## Quickstart — one voice turn, one budget
 
