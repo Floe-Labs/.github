@@ -4,7 +4,7 @@
 
 **What every voice call actually costs — across every carrier, speech, and model vendor.** So finance can price contracts on real numbers, protect gross margin, and stop guessing at the gap between what they signed and what they deployed. Inside Vapi, Retell & Bland, or fully BYOK.
 
-[Website](https://floelabs.xyz) · [Docs](https://floe-labs.gitbook.io/docs) · [Dashboard](https://dev-dashboard.floelabs.xyz) · [𝕏 @FloeLabs](https://x.com/FloeLabs)
+[Website](https://floefinance.com) · [Docs](https://floe-labs.gitbook.io/docs) · [Dashboard](https://dev-dashboard.floelabs.xyz) · [𝕏 @FloeLabs](https://x.com/FloeLabs)
 
 [![npm](https://img.shields.io/npm/v/floe-agent?label=npm&color=green)](https://www.npmjs.com/package/floe-agent)
 [![pypi](https://img.shields.io/pypi/v/floe-agentkit-actions?label=pypi&color=blue)](https://pypi.org/project/floe-agentkit-actions/)
@@ -128,4 +128,4 @@ OpenAI-compatible, so it works from any SDK. → [Add Floe to your existing pipe
 ---
 
 Built by operators from Airwallex, Western Union, eBay, Kado, Transak.
-[hello@floelabs.xyz](mailto:hello@floelabs.xyz)
+[hello@floefinance.com](mailto:hello@floefinance.com)
