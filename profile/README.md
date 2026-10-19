@@ -2,88 +2,79 @@
 
 # Floe Labs
 
-**The AI Initiative Ledger — where the AI money is going, and whether it is working.** One ledger for the head of finance who has to defend the AI line item. Every AI initiative holds its cost entries and its value entries, and every number carries a source, a confidence grade (A–D), and a deterministic formula. Periods lock; restatements are journaled.
+**Trusted settlement for task-based AI.** Your AI vendor counts resolutions, then sends an invoice. Floe reconciles every AI task and outcome you're billed for against your own tickets, helpdesk and CRM, codes each one, and signs the statement — so you know your AI outcomes before the QBR, the CFO or the renewal asks.
 
-[Website](https://www.floefinance.com/) · [Docs](https://floe-labs.gitbook.io/docs) · [Dashboard](https://dev-dashboard.floelabs.xyz) · [𝕏 @FloeLabs](https://x.com/FloeLabs)
-
-[![floe-guard](https://img.shields.io/pypi/v/floe-guard?label=floe-guard&color=blue)](https://pypi.org/project/floe-guard/)
-[![@floelabs/cli](https://img.shields.io/npm/v/@floelabs/cli?label=%40floelabs%2Fcli&color=green)](https://www.npmjs.com/package/@floelabs/cli)
-[![license](https://img.shields.io/badge/license-MIT-brightgreen)](https://github.com/Floe-Labs/floe-guard/blob/main/LICENSE)
+[Website](https://www.floefinance.com/) · [AI buyers](https://www.floefinance.com/aibuyers) · [Cleared Work Taxonomy](https://www.floefinance.com/taxonomy) · [Docs](https://floe-labs.gitbook.io/docs) · [Dashboard](https://dev-dashboard.floelabs.xyz) · [𝕏 @FloeLabs](https://x.com/FloeLabs)
 
 ---
 
-> **Start free.** $3 Welcome Credit — 300 API credits on signup, no card required. [Get started →](https://dev-dashboard.floelabs.xyz)
+## The price per resolution is the definition you're paying for
 
-## The problem
+Today every AI vendor decides what counts as a billable task or outcome.
 
-AI spend lands across a dozen vendors — models, speech, telephony, tools, infrastructure. Those bills arrive separately, in different units, on different days, and your finance team spends weeks stitching them together. At the end, the questions a head of finance gets asked are still open: **what does this AI initiative cost, what did it produce, and how sure are we of each number?**
+| Vendor | Billed as resolved when… | Price per resolution |
+|---|---|---|
+| Fin | The customer confirms, or leaves without asking for more help (an "assumed" resolution). Still charged if a teammate joins after Fin answered, unless the customer asked for help. | $0.99 |
+| Zendesk | Zendesk's own AI check marks the resolution "Verified." | $1.50 committed · $2.00 pay-as-you-go |
+| HubSpot | The agent handled the conversation and it wasn't handed to a human within 72 hours. | $0.50 |
+| Salesforce Help Agent | The issue is resolved end to end. Not charged if the customer asks for a human or leaves negative feedback. | $2.00 |
 
-Floe is the accounting layer for that line item. It puts the cost of an initiative next to what the initiative produced, and it says how much each number can be trusted.
+Vendors' published terms and reported prices, checked October 2026. Any contract with a countable unit and an invoice fits: per resolved conversation, per verified resolution, per finalized clinical note, per pull-request-ready task.
 
-## The ledger
+## What Floe finds
+
+- **Invoice errors** — billed, but not in your records.
+- **Invalid outcomes** — resolutions your team had to finish.
+- **Value leakage** — credits you were owed, minimums you didn't use.
+- **Renewal leverage** — what to commit to next year.
+
+## The output
+
+Four numbers and one dispute file. Every number carries its outcome IDs.
 
 | | |
 |---|---|
-| **Initiatives** | Each AI initiative is one record. It holds its cost entries and its value entries side by side. |
-| **Source** | Every number says where it came from. |
-| **Confidence grade** | Every number carries a grade from A to D, so a figure tied to a vendor's own record is never read the same way as an estimate. |
-| **Deterministic formula** | Every derived number comes from a fixed formula. Same inputs, same result. |
-| **Period lock** | A closed period stays closed. Corrections are journaled as restatements, not edited in place. |
+| **$ recoverable** | invoice errors and credits |
+| **$ / outcome** | what the contract says you paid per unit |
+| **$ / valid outcome** | what you paid per unit that counted |
+| **% failed** | paid outcomes that failed your standard |
 
-Where an outcome exists, the ledger joins the cost to it. Where one doesn't, it says so.
+> Vendor: "We delivered 100,000 resolutions."
+> Finance: "These were reopened and closed by my team. These have no ticket. Here are the IDs. You billed us for 100,000. 73,400 satisfied our definition. 4,600 don't satisfy the contract; we're disputing those. The other 22,000 get repriced at renewal."
 
-## How cost gets into the ledger
+## The Cleared Work Taxonomy
 
-**1 · Through the gateway.** Route a model call through Floe by changing the base URL and key. The call is metered, tagged, and held to your spend caps:
+Every billed task or outcome gets a code and one of six actions — **accept**, **credit**, **unbilled**, **dispute**, **renewal lever**, **identify**. Match first; an amount counts once. A code never changes meaning: new meaning, new code. Buyer-only findings (definitional drift) never reach the vendor. No model in the math.
 
-```python
-from openai import OpenAI
+→ [Floe Cleared Work Taxonomy v1.2](https://www.floefinance.com/taxonomy)
 
-client = OpenAI(
-    base_url="https://credit-api.floelabs.xyz/v1",  # was https://api.openai.com/v1
-    api_key=os.environ["FLOE_API_KEY"],             # your Floe key — not an OpenAI key
-)
-# every call now bills to your Floe balance, under your spend caps
-```
+## How it runs
 
-OpenAI-compatible, so it works from any SDK. Keep your own vendor accounts and keys (BYOK), or use one Floe key with no per-vendor accounts (keyless). Gateway overhead: **38ms p50 / ~180ms p99** on live keyless production traffic. → [Add Floe to your existing pipeline](https://floe-labs.gitbook.io/docs/start-here/integrate-existing-pipeline)
+Five read-only inputs: the contract or order form, the vendor's event logs or usage reports, the invoices, an export from your own system of record (helpdesk, CRM, claims, contact center), and your outcome rules. Nothing is written back to any system. One vendor, 30 days, walk away.
 
-**2 · From the vendor's own records.** Give Floe read-only billing access to a vendor and it reconciles your costs against that vendor's records. → [Vendor actuals](https://floe-labs.gitbook.io/docs/know-your-costs/vendor-actuals) · [Vendor connections](https://floe-labs.gitbook.io/docs/know-your-costs/vendor-connections)
+| | |
+|---|---|
+| **Contingency audit** | 20% of recovered credits. Nothing found, nothing owed. |
+| **Per-vendor audit** | Fixed fee on request. Credited against a ledger subscription if you continue. |
 
-**3 · From a local meter.** [`floe-guard`](https://github.com/Floe-Labs/floe-guard) meters and caps spend inside your own process, with no telemetry by default. Ledger sync (rolling out) pushes its priced spend events to Floe — opt-in, no prompts, no content. → [Ledger sync](https://floe-labs.gitbook.io/docs/connect-your-stack/ledger-sync)
+→ [Start an audit](https://www.floefinance.com/aibuyers)
 
-**4 · From voice platforms.** Voice is one cost source among the others. Vapi, Retell, and Bland connect through their own documented hooks — the custom-LLM slot where the platform has one, and end-of-call webhooks. Pipecat and LiveKit connect through the plugins below. → [Setup](https://floe-labs.gitbook.io/docs/connect-your-stack/voice-orchestrators)
+## For AI vendors
 
-**Coverage Score**, per agent, in the dashboard — the share of known spend Floe can enforce before the call, reconcile after it, or cannot see, and which leg to move to raise it. → [Coverage Score](https://floe-labs.gitbook.io/docs/know-your-costs/coverage-score)
+Add Floe Cleared Work to your invoices: publish the task or outcome definition; emit one event per outcome with a stable ID and negate reversals, cancels and retries; stamp the buyer's key on every billed event; measure minimums against delivered units; bill the order-form rate per outcome type and channel; open the event log for the period and leave a dispute window long enough to recount.
 
-## Quickstart
+## Open source
 
-**MCP (zero install)** — add to Claude Code / Cursor / Claude Desktop:
-
-```bash
-claude mcp add --transport http floe https://mcp.floelabs.xyz/mcp \
-  --header "Authorization: Bearer YOUR_FLOE_KEY"
-```
-
-**CLI** — onboard from your terminal:
-
-```bash
-npx @floelabs/cli init
-```
-
-## Repos
+Floe's agent-billing tools — metering, budgets, keys — are open source and maintained.
 
 | Repo | Role | Install |
 |---|---|---|
-| [floe-guard](https://github.com/Floe-Labs/floe-guard) | Local spend meter and budget gate. Runs in your process and feeds the ledger through ledger sync. | `pip install floe-guard` |
-| [floe-cli](https://github.com/Floe-Labs/floe-cli) | The platform from your terminal — agents, keys, budgets, billing. | `npx @floelabs/cli init` |
-| [floe-mcp-server](https://github.com/Floe-Labs/floe-mcp-server) | The platform over MCP, for Claude, Cursor, and any MCP client. | [Setup](https://github.com/Floe-Labs/floe-mcp-server#readme) |
+| [floe-guard](https://github.com/Floe-Labs/floe-guard) | Local spend meter and budget gate for AI tasks. MIT, no account. | `pip install floe-guard` |
+| [floe-mcp-server](https://github.com/Floe-Labs/floe-mcp-server) | Floe over MCP, for Claude, Cursor, and any MCP client. | [Setup](https://github.com/Floe-Labs/floe-mcp-server#readme) |
 | [agent-skills](https://github.com/Floe-Labs/agent-skills) | Agent skills that teach a coding agent to set up and use Floe. | `npx skills add floe-labs/agent-skills` |
-| [floe-cookbook](https://github.com/Floe-Labs/floe-cookbook) | Examples — runnable end-to-end agents, including voice. | `git clone` |
-| [eve-floe](https://github.com/Floe-Labs/eve-floe) | Example — an Eve agent template with its API spend metered on Floe. | `git clone` |
-| [pipecat-floe](https://github.com/Floe-Labs/pipecat-floe) | Voice cost source — Pipecat services metered on Floe. Maintenance mode. | `pip install pipecat-floe` |
-| [livekit-plugins-floe](https://github.com/Floe-Labs/livekit-plugins-floe) | Voice cost source — LiveKit Agents plugin metered on Floe. Maintenance mode. | `pip install livekit-plugins-floe-v1` |
-| [floe-labs-docs](https://github.com/Floe-Labs/floe-labs-docs) | Source for the documentation. | [Read the docs](https://floe-labs.gitbook.io/docs) |
+| [floe-cookbook](https://github.com/Floe-Labs/floe-cookbook) | Runnable examples and reference agents. | `git clone` |
+| [pipecat-floe](https://github.com/Floe-Labs/pipecat-floe) | Pipecat voice plugin metered on Floe. Maintenance mode. | `pip install pipecat-floe` |
+| [livekit-plugins-floe](https://github.com/Floe-Labs/livekit-plugins-floe) | LiveKit Agents plugin metered on Floe. Maintenance mode. | `pip install livekit-plugins-floe-v1` |
 
 ---
 
